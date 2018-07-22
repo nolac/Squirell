@@ -1,10 +1,12 @@
 package views;
 
+import controller.Squirell;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import models.DBController;
 import models.Morceau;
 import models.Morceau.Compositeur;
 
@@ -22,21 +24,17 @@ public class CreateMorceau_VC {
     Button _addMorceau;
     @FXML
     public void initialize(){
-
     }
 
-    private Application mainApp;
 
+
+    private Squirell mainApp;
     public void onAddMorceau(){
         Morceau m=new Morceau(_titre.getText(),new Compositeur(c_nom.getText(),c_prenom.getText()));
-        /*
-            TODO:
-            envoyer m dans la base de données
-         */
 
         if(!_titre.getText().isEmpty()&&!c_nom.getText().isEmpty()&&!c_prenom.getText().isEmpty()){
             System.out.println(m.toString());
-            // mainApp.sendToDB();
+            mainApp.getDb().addMorceau(_titre.getText(),c_nom.getText(),c_prenom.getText());
         }
         else{
             Alert a = new Alert(Alert.AlertType.INFORMATION,"vous n'avez pas saisi de morceau");
@@ -48,8 +46,9 @@ public class CreateMorceau_VC {
         c_prenom.setText("");
     }
 
-    public void setMainApp(Application app){
-        this.mainApp=app;
+    public void setMainApp(Squirell app){
+        this.mainApp=(Squirell)app;
         System.out.println(this.getClass()+" {main setted :"+this.mainApp+"}");
+
     }
 }

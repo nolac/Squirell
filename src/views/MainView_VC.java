@@ -10,10 +10,14 @@ public class MainView_VC {
 
     @FXML
     public void initialize(){
+        System.out.println("\t["+this.getClass()+" initialize method]");
         _menuBar.useSystemMenuBarProperty().setValue(true);
+        System.out.println(("\t[end initialize method "+this.getClass()));
     }
 
+
     public void about(){
+        System.out.println("\t\t["+this.getClass()+" about method]");
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setTitle("a propos de SQUIRELL");
         a.setHeaderText("ABOUT SQUIRELL");
@@ -22,5 +26,6 @@ public class MainView_VC {
                 "Database in made in a SQLITE file.It doesn't need external or localhost server " +
                 "every parts files HAVE TO BE on the same machine");
         a.showAndWait();
+        System.out.println("\t\t[end "+this.getClass()+" about method]");
     }
 }

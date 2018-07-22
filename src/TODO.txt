@@ -1,5 +1,5 @@
 creation du projet : OK
-creation du mainView et de MainApp(fichier Squirell) : OK
+creation du mainView et de MainApp(fichier controller.Squirell) : OK
 creation de la classe Morceau : OK{
     titre : string
     compositeur : Compositeur (afin de garder de l'ordre dans la BDD je voudrais creer une table compositeur)
@@ -11,3 +11,7 @@ creation du tableau fxml et class OK
 creation du createur fxml et class
 creation du controlleur BDD
     *importer jdbc:sqlite
+
+=> pour logs : class -> "["+this.getClass()+" constructor] 0tab
+               initiMethods -> "\t[init "+this.getClass()+" method]" 1tab
+               methodesCourantes -> "\t\t[methodName method]" - "\t\t[end methodName method]" 2tab

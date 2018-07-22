@@ -9,10 +9,13 @@ public class Morceau {
     private Compositeur compositeur;
 /////     constructeurs   ////////
     public Morceau(){
+       // System.out.println("<new Morceau>");
     }
     public Morceau(String titre, Compositeur compositeur){
+        //System.out.println("<new morceau>");
         this.titre=new SimpleStringProperty(titre);
         this.compositeur=compositeur;
+        //System.out.println(this.titreProperty().get());
     }
     public Morceau(String titre, String nom_compositeur,String prenom_compositeur){
         this(titre,new Compositeur(nom_compositeur,prenom_compositeur));
@@ -43,8 +46,10 @@ public class Morceau {
             this.prenom=new SimpleStringProperty();
         }
         public Compositeur(String nom,String prenom){
+            //System.out.println("<new Compositeur>");
             this.nom=new SimpleStringProperty(nom);
             this.prenom=new SimpleStringProperty(prenom);
+           // System.out.println(getNom() + " : " + getPrenom());
         }
 
         /*      accesseurs        */
