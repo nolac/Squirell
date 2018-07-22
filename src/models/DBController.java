@@ -1,32 +1,35 @@
 package models;
 
 
+import interfaces.Observable;
+import interfaces.Observer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DBController {
+public class DBController implements Observable {
     private String url;
-    private ArrayList<Morceau> listeMorceau;
-    Connection con;
-    Statement stat;
+    //private ArrayList<Morceau> listeMorceau;
+    //private Connection con;
+    private Statement stat;
 
     public DBController(){
         System.out.println("["+this.getClass() +" : consctructor]");
+        this.listeObservers=new ArrayList<>();
         this.url="/Users/nico/Desktop/testSquirell.db";
-        this.listeMorceau=new ArrayList<Morceau>();
+        //this.listeMorceau=new ArrayList<Morceau>();
         this.initDB();
         System.out.println("[end constructor "+this.getClass()+"]");
     }
 
 
 
-    public void initDB(){
+    private void initDB(){
         System.out.println("\t[init database method]");
         try{
-            con=DriverManager.getConnection("jdbc:sqlite:"+url);
+            Connection con=DriverManager.getConnection("jdbc:sqlite:"+url);
             System.out.println("\t\tdb connected");
             stat=con.createStatement();
             System.out.println("\t\tstatement initialized");
@@ -37,7 +40,7 @@ public class DBController {
         System.out.println("\t[end init database method]");
     }
 
-    public void addTableMorceau() throws SQLException{
+    private void addTableMorceau() throws SQLException{
         System.out.println("\t\t[creation table Morceau]");
         String sql=("CREATE TABLE IF NOT EXISTS morceau (" +
                 "id integer primary key autoincrement," +
@@ -50,6 +53,7 @@ public class DBController {
         System.out.println("\t\t[table morceau OK]");
     }
 
+    /*
     private void addTableCompositeur() throws SQLException{
         String sql=("CREATE TABLE IF NOT EXISTS compositeur(" +
                 "id integer primary key autoincrement," +
@@ -57,6 +61,7 @@ public class DBController {
                 "prenom varchar(50));");
             stat.execute(sql);
     }
+    */
 
     public void addMorceau(String titreMorceau,String nomCompositeur,String prenomCompositeur){
         String sql = ("INSERT INTO morceau(titre,c_nom,c_prenom) VALUES" +
@@ -69,17 +74,17 @@ public class DBController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        notifyObserver();
     }
 
-
+    /*
     public void addMorceau(Morceau m){
         String t=m.getTitre();
         String c_n=m.getCompositeur().nomProperty().get();
         String c_p=m.getCompositeur().prenomProperty().get();
         this.addMorceau(t,c_n,c_p);
     }
-
+    */
 
     public ObservableList<Morceau> getListeMorceau(){
         ObservableList<Morceau> list=FXCollections.observableArrayList();
@@ -97,5 +102,25 @@ public class DBController {
             e.printStackTrace();
         }
         return list;
+    }
+
+    /////////////  interface Observable  /////
+    private ArrayList<Observer> listeObservers;
+    @Override
+    public void addObserver(Observer O) {
+        listeObservers.add(O);
+        notifyObserver();
+    }
+
+    @Override
+    public void delOberverList() {
+        this.listeObservers=new ArrayList<>();
+    }
+
+    @Override
+    public void notifyObserver() {
+        for (Observer listeObserver : listeObservers) {
+            listeObserver.update(this.getListeMorceau());
+        }
     }
 }

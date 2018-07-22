@@ -1,5 +1,6 @@
 package views;
 
+import interfaces.Observer;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,7 +8,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import models.Morceau;
 
-public class ArchiveListView_VC {
+public class ArchiveListView_VC implements Observer {
     @FXML
     TableView<Morceau> _archives;
     @FXML
@@ -48,5 +49,11 @@ public class ArchiveListView_VC {
         System.out.println("\t\t["+this.getClass()+" setListeMorceau method]");
         _archives.setItems(liste);
         System.out.println(("\t\t[end "+this.getClass()+" setListeMorceau method]"));
+    }
+
+    @Override
+    public void update(ObservableList<Morceau> list) {
+        this.listeMorceaux=list;
+        _archives.setItems(list);
     }
 }

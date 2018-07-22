@@ -32,13 +32,16 @@ public class Squirell extends Application {
     @Override
     public void start(Stage primaryStage) {
         System.out.println("[start method]");
+        System.out.println("connect to database");
+        this.db=new DBController();
+
         this.stage=primaryStage;
         this.initMainView();
         this.initTableau();
         this.initCreateMorceau();
         System.out.println("views initialized ");
-        System.out.println("connect to database");
-        this.db=new DBController();
+
+
         System.out.println("[end start method]");
     }
 
@@ -82,7 +85,8 @@ public class Squirell extends Application {
         }
         ArchiveListView_VC tvvc = loader.getController();
         tvvc.setMainApp(this);
-        tvvc.setListeMorceaux(this.listMorceau);
+        //tvvc.setListeMorceaux(this.listMorceau);
+        this.db.addObserver(tvvc);
         System.out.println("\t[end "+this.getClass()+" initTableau method]");
     }
 
