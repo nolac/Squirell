@@ -7,7 +7,6 @@ import javafx.scene.control.MenuBar;
 public class MainView_VC {
     @FXML
     MenuBar _menuBar;
-
     @FXML
     public void initialize(){
         System.out.println("\t["+this.getClass()+" initialize method]");

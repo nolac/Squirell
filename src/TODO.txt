@@ -8,10 +8,13 @@ creation de la classe Morceau : OK{
         prenom : String} OK
 
 creation du tableau fxml et class OK
-creation du createur fxml et class
-creation du controlleur BDD
+creation du createur fxml et class OK
+creation du controlleur BDD OK
     *importer jdbc:sqlite
 
 => pour logs : class -> "["+this.getClass()+" constructor] 0tab
                initiMethods -> "\t[init "+this.getClass()+" method]" 1tab
                methodesCourantes -> "\t\t[methodName method]" - "\t\t[end methodName method]" 2tab
+
+
+creation de la toolbar et gerer les interractions: en cours 23/07/2018

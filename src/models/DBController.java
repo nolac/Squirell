@@ -65,7 +65,7 @@ public class DBController implements Observable {
 
     public void addMorceau(String titreMorceau,String nomCompositeur,String prenomCompositeur){
         String sql = ("INSERT INTO morceau(titre,c_nom,c_prenom) VALUES" +
-                "('" + titreMorceau + "','" + nomCompositeur + "','" +prenomCompositeur+ "');");
+                "(\"" + titreMorceau + "\",\"" + nomCompositeur + "\",\"" +prenomCompositeur+ "\");");
 
 
         try {

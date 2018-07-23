@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -33,12 +35,14 @@ public class Squirell extends Application {
     public void start(Stage primaryStage) {
         System.out.println("[start method]");
         System.out.println("connect to database");
-        this.db=new DBController();
+        //this.db=new DBController();
 
         this.stage=primaryStage;
+        System.out.println("primary stage :"+this.stage);
         this.initMainView();
         this.initTableau();
         this.initCreateMorceau();
+        this.initToolBar();
         System.out.println("views initialized ");
 
 
@@ -46,15 +50,15 @@ public class Squirell extends Application {
     }
 
 
-    BorderPane mainCont;
-    Stage stage;
-    ObservableList<Morceau> listMorceau;
-    DBController db;
+    private BorderPane mainCont,centerBorderPane;
+    private Stage stage;
+    private ObservableList<Morceau> listMorceau;
+    private DBController db;
 
     public Squirell(){
         this.db=new DBController();
-        this.listMorceau=db.getListeMorceau();
-        System.out.println("{armoire :\n"+this.listMorceau+"\n}");
+        //this.listMorceau=db.getListeMorceau();//=> mock for test
+        //System.out.println("{armoire :\n"+this.listMorceau+"\n}");
     }
 
     private void initMainView(){
@@ -62,13 +66,15 @@ public class Squirell extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Squirell.class.getResource("../views/mainView.fxml"));
         try {
-            mainCont=loader.load();
-            Scene sc=new Scene(mainCont);
+            this.mainCont=loader.load();
+            Scene sc=new Scene(this.mainCont);
             stage.setScene(sc);
             stage.show();
+            this.centerBorderPane=(BorderPane)mainCont.getCenter();
         }catch (IOException e){
             e.getCause();
         }
+        System.out.println("MAINCONT : "+this.mainCont);
         System.out.println(("\t[end "+this.getClass()+" initMainView method]"));
     }
 
@@ -78,14 +84,13 @@ public class Squirell extends Application {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(Squirell.class.getResource("../views/archiveListView.fxml"));
         try {
-            tabPan=loader.load();
-            this.mainCont.setCenter(tabPan);
+            //tabPan=loader.load();
+            centerBorderPane.setCenter(loader.load());
         }catch (IOException e){
-            e.getCause();
+            e.printStackTrace();
         }
         ArchiveListView_VC tvvc = loader.getController();
         tvvc.setMainApp(this);
-        //tvvc.setListeMorceaux(this.listMorceau);
         this.db.addObserver(tvvc);
         System.out.println("\t[end "+this.getClass()+" initTableau method]");
     }
@@ -95,8 +100,7 @@ public class Squirell extends Application {
         FXMLLoader loader=new FXMLLoader();
         loader.setLocation(Squirell.class.getResource("../views/createMorceau.fxml"));
         try{
-            createPan=loader.load();
-            this.mainCont.setRight(createPan);
+            centerBorderPane.setRight(loader.load());
         }catch (IOException e){
             e.getCause();
         }
@@ -104,13 +108,23 @@ public class Squirell extends Application {
         cmvc.setMainApp(this);
     }
 
+    public void initToolBar(){
+        FXMLLoader loader=new FXMLLoader();
+        loader.setLocation(Squirell.class.getResource("../views/toolbar.fxml"));
+        try {
+            centerBorderPane.setTop((ToolBar)loader.load());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public void initMenuBar(){
 
     }
 
-    public ObservableList getObservableList(){
+    /*public ObservableList getObservableList(){
         return this.listMorceau;
-    }
+    }*/
     public DBController getDb(){
         return this.db;
     }
