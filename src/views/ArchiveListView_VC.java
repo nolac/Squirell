@@ -53,7 +53,6 @@ public class ArchiveListView_VC implements Observer {
 
     @Override
     public void update(ObservableList<Morceau> list) {
-        this.listeMorceaux=list;
         _archives.setItems(list);
     }
 }

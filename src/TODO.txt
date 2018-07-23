@@ -12,9 +12,24 @@ creation du createur fxml et class OK
 creation du controlleur BDD OK
     *importer jdbc:sqlite
 
+{/////////////       info    ////////////////////////////////
 => pour logs : class -> "["+this.getClass()+" constructor] 0tab
                initiMethods -> "\t[init "+this.getClass()+" method]" 1tab
                methodesCourantes -> "\t\t[methodName method]" - "\t\t[end methodName method]" 2tab
+/////////////////////////////////////////////////////////////}
+
+creation de la toolbar : ok
+gerer les interractions: ok
+creer le squelette de charque fonction par bouton
+
+afficher une fenetre de dialog quand double clic sur une ligne :
+    label titre, compositeur
+    TextArea commentaires
+    boutons  : editMorceau cancel(ferme la fenetre dialog) supprimer=>lance une alert de confirmation
 
 
-creation de la toolbar et gerer les interractions: en cours 23/07/2018
+
+fin de chantier :
+    refactor les methodes et variables
+    eclaircir le code
+    supprimer les logs inutiles

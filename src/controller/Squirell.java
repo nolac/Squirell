@@ -13,6 +13,7 @@ import models.DBController;
 import models.Morceau;
 import views.ArchiveListView_VC;
 import views.CreateMorceau_VC;
+import views.Toolbar_VC;
 
 import java.io.IOException;
 
@@ -116,6 +117,8 @@ public class Squirell extends Application {
         }catch (IOException e){
             e.printStackTrace();
         }
+        Toolbar_VC tbvc=loader.getController();
+        tbvc.setMainApp(this);
     }
 
     public void initMenuBar(){
